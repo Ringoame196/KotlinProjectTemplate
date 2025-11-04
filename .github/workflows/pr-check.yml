@@ -1,4 +1,4 @@
-name: Kotlin Format & Build Check
+name: Kotlin Lint & Build Check
 
 on:
   pull_request:
@@ -27,7 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle
 
-      - name: Spotless Check & Build
+      # 👇 これを追加！（gradlew に実行権限を付与）
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
+
+      - name: Lint & Build
         run: |
           ./gradlew spotlessCheck
           ./gradlew build
